@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const { pool, pgFormat } = require('./db');
 const tdAmeritradeData = require('./td-ameritrade-data');
 
 /* MIDDLEWARE */
 app.use(express.json());
+app.use(cors());
 
 /* ROUTES */
 app.get('/journal-entries', async(req, res) => {
@@ -45,6 +47,7 @@ app.get('/all-transactions', (req, res) =>
 )
 
 app.post('/insert-entry', async (req, res) => {
+    console.log('req', req);
     const {entryDto} = req.body;
     let currISOStr = new Date(Date.now()).toISOString();
 

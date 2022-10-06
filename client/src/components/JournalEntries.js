@@ -1,5 +1,4 @@
 import React from 'react'
-import { buildDateTimeStr } from '../utils/utils'
 import JournalEntryMeta from './JournalEntryMeta';
 import JournalEntryStatus from './JournalEntryStatus';
 import JournalEntryTransactionsList from './JournalEntryTransactionsList';

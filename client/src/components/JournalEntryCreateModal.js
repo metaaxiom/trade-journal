@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Modal from './Modal'
 import JournalEntryDto from '../models/JournalEntryDto'
-import JournalEntryMeta from './JournalEntryMeta';
 import JournalEntryForm from './JournalEntryForm';
 import JournalEntryTransactionsList from './JournalEntryTransactionsList';
 import { toast } from 'react-toastify';

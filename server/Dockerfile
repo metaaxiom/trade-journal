@@ -1,17 +1,7 @@
-FROM node:16.5.0
-
-LABEL version="1.0-alpha"
-LABEL description="Alpha version of the Trade Journal app backend."
-LABEL maintainer=["julianderwisz@gmail.com"]
-
+FROM node:16.5.0-alpine
 WORKDIR /app
-
-COPY ["package.json", "package-lock.json", "./"]
-
-RUN npm install --production
-
 COPY . .
-
+ENV NODE_ENV production
+RUN npm ci
 EXPOSE 5000
-
 CMD ["npm", "start"]

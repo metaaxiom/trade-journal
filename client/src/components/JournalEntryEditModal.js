@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import Modal from './Modal'
 import JournalEntryDto from '../models/JournalEntryDto'
-import { buildDateTimeStr } from '../utils/utils';
 import JournalEntryForm from './JournalEntryForm';
 import JournalEntryTransactionsList from './JournalEntryTransactionsList';
 import JournalEntryStatus from './JournalEntryStatus';

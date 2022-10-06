@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import JournalEntryCreateModal from './JournalEntryCreateModal'
 import JournalEntryListModal from './JournalEntryListModal'
 import { toIntermediateDtoSyntax, getTransactionsCostSum, getEntryStatus, buildDateTimeStr } from '../utils/utils'
@@ -102,26 +103,19 @@ export default function TransactionsTable(props){
     }
 
     const insertEntry = async () => {
-        let rawResponse = await fetch('/insert-entry', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({entryDto: entryDto})
-        })
-        let response = await rawResponse.json();
-
-        console.log('RESPONSE', response);
+        let response = await axios.post('insert-entry', {
+            entryDto: entryDto
+        });
+        console.log('response', response);
     
-        let intermInsertedEntryWithTransactions = toIntermediateDtoSyntax(response.dbEntryWithTransactions);
+        let intermInsertedEntryWithTransactions = toIntermediateDtoSyntax(response.data.dbEntryWithTransactions);
         let insertedTransactionDtos = allTransactionDtos.filter(transactionDto => 
             intermInsertedEntryWithTransactions.transactions.findIndex(intermTransaction => 
                 intermTransaction.transactionId == transactionDto.transactionId
             ) != -1
         )
 
-        if(rawResponse.status === 201){
+        if(response.status === 201){
           setEntriesWithTransactions(prevEntriesWithTransactions => {
             return [
                 ...prevEntriesWithTransactions,
@@ -135,7 +129,7 @@ export default function TransactionsTable(props){
           });
         }
     
-        return { resultMsg: response.resultMsg, status: rawResponse.status };
+        return { resultMsg: response.data.resultMsg, status: response.status };
     }
 
     useEffect(() => {

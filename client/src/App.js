@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import JournalEntries from './components/JournalEntries'
@@ -17,55 +18,52 @@ function App(){
 
   /* INITIALIZE DATA */
   useEffect(() => {
-    fetch('/all-transactions').then(
-      res => res.json()
-    ).then(data => {
-      console.log('sdfffffffffffffffffffffffffffffffffffff');
-      setAllTransactionDtos(
-        data.transactions.map(transaction => new TransactionDto(transaction))
-      );
-    })
+    axios.get('all-transactions')
+      .then(res => {
+        setAllTransactionDtos(
+          res.data.transactions.map(transaction => new TransactionDto(transaction))
+        );
+      })
   }, [])
 
   useEffect(() => {
-    fetch('/journal-entries').then(
-      res => res.json()
-    ).then(data => {
-      // populate journal entries with relevant TD Ameritrade data
-      let entriesWithTransactions = data.dbEntriesWithTransactions.map(dbEntryWithTransactions => {
-        let intermEntryWithTransactions = toIntermediateDtoSyntax(dbEntryWithTransactions);
-        let transactionsCostSum = 0;
-        let transactionDtos = intermEntryWithTransactions.transactions.reduce(
-          (prevIntermTransaction, currIntermTransaction) => {
-            console.log('currIntermTransaction', currIntermTransaction);
-            let matchedTransactionDto = allTransactionDtos.find(
-              transactionDto => transactionDto.transactionId == currIntermTransaction.transactionId
-            );
+    axios.get('journal-entries')
+      .then(res => {
+        // populate journal entries with relevant TD Ameritrade data
+        let entriesWithTransactions = res.data.dbEntriesWithTransactions.map(dbEntryWithTransactions => {
+          let intermEntryWithTransactions = toIntermediateDtoSyntax(dbEntryWithTransactions);
+          let transactionsCostSum = 0;
+          let transactionDtos = intermEntryWithTransactions.transactions.reduce(
+            (prevIntermTransaction, currIntermTransaction) => {
+              console.log('currIntermTransaction', currIntermTransaction);
+              let matchedTransactionDto = allTransactionDtos.find(
+                transactionDto => transactionDto.transactionId == currIntermTransaction.transactionId
+              );
 
-            console.log('matchedTransactionDto', matchedTransactionDto);
-            
-            // if no match in TD data, skip the transaction
-            if(matchedTransactionDto !== undefined){
-              let newTransactionDto = {...matchedTransactionDto, ...currIntermTransaction};
-              prevIntermTransaction.push(newTransactionDto);
-              transactionsCostSum += newTransactionDto.costTotal;
+              console.log('matchedTransactionDto', matchedTransactionDto);
+              
+              // if no match in TD data, skip the transaction
+              if(matchedTransactionDto !== undefined){
+                let newTransactionDto = {...matchedTransactionDto, ...currIntermTransaction};
+                prevIntermTransaction.push(newTransactionDto);
+                transactionsCostSum += newTransactionDto.costTotal;
+              }
+              return prevIntermTransaction;
             }
-            return prevIntermTransaction;
-          }
-        , []);
+          , []);
 
-        console.log('transactionDtos', transactionDtos);
+          console.log('transactionDtos', transactionDtos);
 
-        return new JournalEntryDto({
-          ...intermEntryWithTransactions.entry,
-          transactionDtos: transactionDtos,
-          transactionsCostSum: transactionsCostSum,
-          isActive: getEntryStatus(transactionDtos)
+          return new JournalEntryDto({
+            ...intermEntryWithTransactions.entry,
+            transactionDtos: transactionDtos,
+            transactionsCostSum: transactionsCostSum,
+            isActive: getEntryStatus(transactionDtos)
+          });
         });
-      });
 
-      setEntriesWithTransactions(entriesWithTransactions);
-    })
+        setEntriesWithTransactions(entriesWithTransactions);
+      })
   }, [allTransactionDtos]);
 
   useEffect(() => {console.log(entriesWithTransactions);}, [entriesWithTransactions]);
@@ -90,9 +88,6 @@ function App(){
       )
     ];
 
-    console.log('transactionIdsToLoad', transactionIdsToLoad);
-    console.log('entryTransactionDtosToLoad', entryTransactionDtosToLoad);
-
     setEntryDto({
       ...entryToLoad,
       transactionsCostSum: getTransactionsCostSum(entryTransactionDtosToLoad),
@@ -116,20 +111,14 @@ function App(){
   }
 
   const updateEntry = async () => {
-    let rawResponse = await fetch('/update-entry', {
-        method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({entryDto: entryDto})
-    })
-    let response = await rawResponse.json();
+    let response = await axios.put('update-entry', 
+      { entryDto: entryDto }
+    );
     
-    if(rawResponse.status === 201){
+    if(response.status === 201){
 
       console.log('response', response);
-      let intermEntryWithTransactions = toIntermediateDtoSyntax(response.dbEntryWithTransactions);
+      let intermEntryWithTransactions = toIntermediateDtoSyntax(response.data.dbEntryWithTransactions);
 
       setEntriesWithTransactions(prevEntriesWithTransactions => (prevEntriesWithTransactions.map(prevEntryDto => {
         if(prevEntryDto.entryId == intermEntryWithTransactions.entry.entryId){
@@ -149,7 +138,7 @@ function App(){
       })));
     }
 
-    return { resultMsg: response.resultMsg, status: rawResponse.status };
+    return { resultMsg: response.data.resultMsg, status: response.status };
   }
 
   /* ENTRY LIST MODAL */
@@ -179,29 +168,23 @@ function App(){
   }
 
   const deleteEntry = async (entryId) => {
-    let rawResponse = await fetch('/delete-entry', {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({entryId: entryId})
-    })
-    let response = await rawResponse.json();
+    let response = await axios.delete('delete-entry', 
+      {data: {entryId: entryId}}
+    );
 
-    if(rawResponse.status === 201){
+    if(response.status === 201){
       setEntriesWithTransactions(prevValue => 
         [...prevValue.filter(entryWithTransactions => entryWithTransactions.entryId != entryId)]
       );
     }
 
-    return { resultMsg: response.resultMsg, status: rawResponse.status };
+    return { resultMsg: response.data.resultMsg, status: response.status };
   }
 
   return (
-    <>
+    <div>
       <ToastContainer theme="dark" autoClose={6000} pauseOnHover />
-      <Router>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
           <header>
               <nav className="content-container">
                   <ol>
@@ -248,7 +231,7 @@ function App(){
                 } />
             </Routes>
           </main>
-      </Router>
+      </BrowserRouter>
 
       <JournalEntryEditModal
         modalShow={showEntryEditModal}
@@ -271,7 +254,7 @@ function App(){
         goBack={entryDeleteModalGoBack}
       ></JournalEntryDeleteModal>
 
-    </>
+    </div>
   )
 }
 
