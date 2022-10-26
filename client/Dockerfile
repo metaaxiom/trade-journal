@@ -2,7 +2,7 @@
 FROM node:16.5.0-alpine AS builder
 WORKDIR /app
 COPY . .
-ENV PUBLIC_URL /trade-journal
+ENV PUBLIC_URL /app/trade-journal
 RUN npm ci --production
 RUN npm run build
 

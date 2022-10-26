@@ -1,0 +1,88 @@
+@use "variables" as v;
+
+header {
+  background-color: v.$layout-gray-9;
+  border-bottom: 1px solid v.$layout-gray-7;
+  margin-bottom: 24px;
+
+  .content-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  #header__logo {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Roboto Mono", monospace;
+  }
+
+  nav {
+    ol {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    li {
+      display: inline-block;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    a {
+      text-decoration: none;
+      display: inline-block;
+      padding: 12px 16px;
+      background-color: v.$layout-gray-8;
+
+      &:link,
+      &:visited {
+        color: v.$accent-gray-2;
+      }
+      &:hover {
+        color: v.$accent-gray-1;
+      }
+      &.nav-link--active {
+        background-color: v.$layout-gray-5;
+      }
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 814px) {
+  header {
+    margin-bottom: 18px;
+
+    .content-container {
+      gap: 20px;
+    }
+
+    #header__logo {
+      font-size: 18px;
+    }
+
+    nav a {
+      padding: 6px 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #header__logo {
+    /* remove original logo (display none wouldn't work) */
+    text-indent: -9999px;
+    line-height: 0;
+  }
+  #header__logo:after {
+    /* replace original logo with mobile version */
+    text-indent: 0;
+    line-height: 20px;
+    font-size: 20px;
+    display: block;
+    content: "tj_";
+  }
+}

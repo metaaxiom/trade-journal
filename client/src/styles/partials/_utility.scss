@@ -1,0 +1,50 @@
+@use "variables" as v;
+
+/* TYPOGRAPHY */
+.text--small {
+  font-size: 13px;
+}
+.text--number {
+  font-family: "Roboto Mono", monospace;
+}
+.text--data-green {
+  color: v.$data-green !important;
+}
+.text--data-red {
+  color: v.$data-red !important;
+}
+.text--data-blue {
+  color: v.$data-blue !important;
+}
+.text--data-purple {
+  color: v.$data-purple !important;
+}
+.text--data-yellow {
+  color: v.$data-yellow !important;
+}
+.text--accent-red {
+  color: v.$accent-red-1 !important;
+}
+.text--accent-green {
+  color: v.$accent-green-1 !important;
+}
+.text--accent-blue {
+  color: v.$accent-blue-1 !important;
+}
+
+/* MIXINS */
+@mixin badge--dot {
+  // turns badge into dot
+  font-size: 0;
+  border-radius: 75%;
+  padding: 0;
+  height: 10px;
+  width: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  /* TYPOGRAPHY */
+  .text--small {
+    font-size: 12px;
+  }
+}

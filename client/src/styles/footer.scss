@@ -1,0 +1,17 @@
+@use "./partials/variables" as v;
+
+footer.content-container {
+  text-align: right;
+  padding-bottom: 20px;
+}
+#logout-btn {
+  color: v.$accent-gray-4;
+
+  i {
+    padding-right: 5px;
+  }
+
+  &:hover {
+    color: v.$accent-red-1;
+  }
+}

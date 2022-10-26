@@ -1,0 +1,22 @@
+/* =============================================================================
+============ ENTRY META CAN BE DISPLAYED ANYWHERE AN ENTRY IS SHOWN ============ 
+============================================================================= */
+
+.entry__meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+@media screen and (max-width: 814px) {
+  .entry__meta {
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .entry__meta {
+    gap: 10px;
+    align-items: baseline;
+  }
+}

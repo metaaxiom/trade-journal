@@ -1,0 +1,80 @@
+/* ========================================
+============ TRANSACTIONS PAGE ============
+=========================================*/
+
+@use "partials/variables" as v;
+
+#transactions-table_top-controls {
+  margin-bottom: 20px;
+
+  button {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+#transactions-table-wrapper {
+  overflow-x: auto;
+}
+#transactions-table {
+  text-align: left;
+  background-color: v.$layout-gray-9;
+  border: 1px solid v.$layout-gray-7;
+  min-width: 564px;
+
+  tbody tr:nth-child(even) {
+    background-color: v.$layout-gray-8;
+  }
+  td,
+  th {
+    white-space: nowrap;
+  }
+  td {
+    padding: 4px;
+    border: 1px solid v.$layout-gray-7;
+  }
+  th {
+    background-color: v.$layout-gray-6;
+
+    button {
+      width: 100%;
+      padding: 4px 0;
+      border: none;
+      color: rgb(255, 255, 255);
+      box-sizing: border-box;
+      text-align: left;
+      font-weight: bold;
+      background: none;
+      cursor: pointer;
+
+      i {
+        margin-right: 5px;
+        color: v.$accent-gray-2;
+      }
+    }
+  }
+  #transactions-table__heading-checkbox {
+    padding-left: 4px;
+  }
+}
+
+@media screen and (max-width: 814px) {
+  #transactions-table {
+    th button,
+    td {
+      font-size: 12px;
+    }
+    th button i {
+      margin-right: 3px;
+      font-size: 11px;
+    }
+    td {
+      padding: 2px;
+    }
+    #transactions-table__heading-checkbox {
+      padding-left: 2px;
+    }
+  }
+}

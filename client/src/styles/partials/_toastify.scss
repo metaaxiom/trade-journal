@@ -1,0 +1,11 @@
+@use "variables" as v;
+@use "../../../node_modules/react-toastify/dist/ReactToastify.minimal.css";
+
+:root {
+  --toastify-color-dark: #{v.$layout-gray-5} !important;
+  --toastify-icon-color-success: #{v.$accent-green-1} !important;
+  --toastify-icon-color-error: #{v.$accent-red-1} !important;
+  --toastify-color-progress-dark: #{v.$accent-gray-2} !important;
+  --toastify-color-progress-success: #{v.$accent-green-1} !important;
+  --toastify-color-progress-error: #{v.$accent-red-1} !important;
+}

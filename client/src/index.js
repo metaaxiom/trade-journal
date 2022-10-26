@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // set default for axios requests made to the backend
-axios.defaults.baseURL = 'api';
+if(process.env.NODE_ENV == 'production') axios.defaults.baseURL = 'api';
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';

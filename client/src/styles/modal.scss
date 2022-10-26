@@ -1,0 +1,98 @@
+@use "partials/variables" as v;
+
+.modal-wrapper {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: 100%;
+  max-width: 815px;
+  z-index: 2;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px 15px 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: v.$layout-gray-8;
+  border-radius: 3px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.8);
+
+  .modal__title {
+    margin-top: 0;
+    flex-basis: 100%;
+    margin-bottom: 0;
+  }
+  .modal__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .modal__header-control {
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    background: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+  }
+  .modal__close-btn {
+    justify-self: flex-end;
+  }
+  .modal__bottom-controls {
+    margin-top: auto;
+    padding-top: 30px;
+    display: flex;
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 814px) {
+  .modal-wrapper {
+    height: 100vh;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+  }
+  .modal {
+    height: 100%;
+    padding: 5px 8px 8px 8px;
+
+    .modal__header {
+      margin-bottom: 10px;
+    }
+    .modal__title {
+      font-size: 1.3em;
+    }
+    .modal__header-control {
+      font-size: 18px;
+    }
+    .modal__back-btn::after {
+      display: inline-block;
+      content: "";
+      margin-right: 10px;
+    }
+    .modal__text {
+      padding: 7px;
+    }
+    .modal__bottom-controls {
+      padding-top: 15px;
+    }
+  }
+}

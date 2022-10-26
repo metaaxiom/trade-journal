@@ -1,0 +1,134 @@
+/*
+============================================
+============ JOURNAL ENTRY PAGE ============
+============================================
+*/
+
+@use "partials/variables" as v;
+@use "partials/utility" as u;
+
+/* SORTING AT TOP OF PAGE */
+#journal-sort {
+  display: flex;
+  align-items: end;
+  gap: 6px;
+  margin-bottom: 30px;
+
+  #journal-sort__item--field,
+  #journal-sort__item--order {
+    label {
+      display: block;
+      margin-bottom: 3px;
+    }
+  }
+  #journal-sort__item--order {
+    button {
+      width: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  #journal-sort__item--active-filter {
+    padding-left: 10px;
+
+    label {
+      vertical-align: text-top;
+    }
+    input[type="checkbox"] {
+      height: 16px;
+      width: 16px;
+      margin-right: 6px;
+    }
+  }
+}
+
+/* INDIVIDUAL ENTRIES DISPLAYED ON PAGE */
+.entry--display {
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  background-color: v.$layout-gray-8;
+  border-radius: 3px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .entry__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+.entry--display__controls {
+  background-color: v.$layout-gray-2;
+  border-radius: 3px;
+}
+.entry--display__controls button {
+  padding: 4px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+.entry--display__controls button:first-child {
+  border-right: 1px solid v.$layout-gray-1;
+}
+.entry--display__controls__edit i {
+  color: v.$accent-gray-1;
+}
+.entry--display__controls__delete i {
+  color: v.$accent-red-1;
+}
+.entry--display .entry__description {
+  margin: 10px 0 10px 0;
+}
+
+@media screen and (max-width: 814px) {
+  /* INDIVIDUAL ENTRIES DISPLAYED ON PAGE */
+  #journal-sort {
+    margin-bottom: 20px;
+  }
+  .entry--display {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .entry--display__controls button {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* SORTING AT TOP OF PAGE */
+  #journal-sort {
+    align-items: flex-start;
+
+    #journal-sort__item--active-filter {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      padding-left: 5px;
+
+      input[type="checkbox"] {
+        height: 15px;
+        width: 15px;
+        margin: 6px 0 0 0;
+      }
+    }
+  }
+
+  /* INDIVIDUAL ENTRIES DISPLAYED ON PAGE */
+  .entry--display .entry__header {
+    flex-direction: column-reverse;
+  }
+  .entry--display .badge--entry-is-active {
+    @include u.badge--dot;
+  }
+  .entry--display__controls {
+    margin-bottom: 8px;
+  }
+  .entry--display__controls button {
+    font-size: 13px;
+  }
+}

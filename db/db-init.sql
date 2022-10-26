@@ -12,3 +12,8 @@ CREATE TABLE journal_entry_transaction (
     PRIMARY KEY (journal_entry_id, transaction_id),
     FOREIGN KEY (journal_entry_id) REFERENCES journal_entry(journal_entry_id) ON DELETE CASCADE
 );
+
+CREATE TABLE account (
+    account_id SERIAL PRIMARY KEY,
+    password TEXT
+);

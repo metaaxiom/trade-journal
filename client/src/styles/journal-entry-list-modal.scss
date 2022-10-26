@@ -1,0 +1,62 @@
+@use "partials/variables" as v;
+@use "partials/utility" as u;
+
+p.entry-list__text {
+  margin-top: 0;
+}
+.entry-list__table-wrapper {
+  overflow-y: auto;
+  background-color: v.$layout-gray-9;
+  padding: 0 10px 5px 10px;
+  border: 1px solid v.$layout-gray-1;
+  border-radius: 3px;
+}
+.entry-list__table tbody tr {
+  cursor: pointer;
+  background-color: v.$layout-gray-5;
+}
+.entry-list__table tbody tr:hover {
+  background-color: v.$layout-gray-2;
+}
+.entry-list__table td {
+  @extend .text--small;
+  box-sizing: border-box;
+  padding: 4px;
+  border-right: 1px solid v.$layout-gray-1;
+  height: 32px;
+}
+.entry-list__table td.entry-list__table__cell--status,
+.entry-list__table td:last-child {
+  border-right: none;
+}
+td.entry-list__table__cell--status .badge--entry-is-active {
+  @include u.badge--dot;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 814px) {
+  .entry-list__table-wrapper {
+    padding-top: 10px;
+  }
+  .entry-list__table td.entry-list__table__cell--status:before {
+    content: "Status";
+  }
+  .entry-list__table td.entry-list__table__cell--id:before {
+    content: "Entry ID";
+  }
+  .entry-list__table td.entry-list__table__cell--tickers:before {
+    content: "Tickers";
+  }
+  .entry-list__table td.entry-list__table__cell--total:before {
+    content: "Total";
+  }
+  .entry-list__table td.entry-list__table__cell--description:before {
+    content: "Description";
+  }
+  .entry-list__table td.entry-list__table__cell--modified:before {
+    content: "Modified";
+  }
+  .entry-list__table td.entry-list__table__cell--created:before {
+    content: "Created";
+  }
+}

@@ -1,0 +1,20 @@
+@use "partials/variables" as v;
+
+.badge {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 12px;
+  background-color: v.$accent-gray-4;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.badge--green {
+  background: v.$accent-green-1;
+}
+.badge--red {
+  background: v.$accent-red-1;
+}
+.badge--entry-is-active {
+  width: 64px;
+  text-align: center;
+}

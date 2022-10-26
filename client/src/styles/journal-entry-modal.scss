@@ -1,0 +1,43 @@
+/* ==================================================================================
+============ STYLES ANY MODAL DISPLAYING JOURNAL ENTRY (CREATE AND EDIT) ============
+=====================================================================================
+*/
+
+@use "partials/variables" as v;
+@use "partials/utility" as u;
+
+.modal--entry .entry__form {
+  margin-bottom: 10px;
+}
+.modal--entry .entry__description {
+  border: 1px solid v.$layout-gray-1;
+  border-radius: 3px;
+  background-color: v.$layout-gray-10;
+  color: rgb(255, 255, 255);
+  padding: 4px 8px;
+  margin-top: 2px;
+}
+.modal--entry .entry {
+  overflow-y: auto;
+}
+.modal--entry .entry__meta {
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 814px) {
+  .modal--entry .entry {
+    background-color: v.$layout-gray-9;
+    border: 1px solid v.$layout-gray-2;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .modal--entry-edit .badge--entry-is-active {
+    @include u.badge--dot;
+  }
+  .modal--entry .entry__form {
+    margin-bottom: 5px;
+  }
+}
