@@ -44,10 +44,6 @@ export default function JournalEntryEditModal(props) {
     toast.success(updateEntryResponse.resultMsg);
   };
 
-  // useEffect(() => {
-  //   console.log("entryDto updated", entryDto);
-  // }, [entryDto]);
-
   return (
     <Modal
       show={modalShow}
